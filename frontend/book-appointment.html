@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Hospital Appointment System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HealthCare+</a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html">Doctors</a>
+                <!-- Injected via JS -->
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="booking-container">
+            <h1>Book Appointment</h1>
+            <p id="doctor-info" style="margin-bottom: 1.5rem; color: var(--secondary-color);">Select a doctor first.</p>
+
+            <div id="message-container"></div>
+
+            <form id="booking-form">
+                <input type="hidden" id="doctorId" name="doctorId">
+
+                <!-- Helper for logged in user -->
+                <input type="hidden" id="patientId">
+
+                <div class="form-group">
+                    <label for="patientName">Patient Name</label>
+                    <input type="text" id="patientName" required placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="patientEmail">Email</label>
+                    <input type="email" id="patientEmail" required placeholder="john@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="patientPhone">Phone</label>
+                    <input type="tel" id="patientPhone" required placeholder="123-456-7890">
+                </div>
+
+                <div class="form-group">
+                    <label for="appointmentDate">Date</label>
+                    <input type="date" id="appointmentDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Available Slots (30 min)</label>
+                    <div id="slots-container" class="slots-container">
+                        <p style="grid-column: 1/-1; color: var(--secondary-color); font-size: 0.9rem;">Select a date to
+                            view slots.</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" id="submit-btn" disabled>Confirm Booking</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="js/booking.js"></script>
+    <script>
+        // Auth Logic for Booking Page
+        const navLinks = document.getElementById('nav-links');
+        const patientData = localStorage.getItem('patient');
+        const patient = patientData ? JSON.parse(patientData) : null;
+
+        if (patient) {
+            navLinks.innerHTML += `
+                <a href="appointments.html">My Appointments</a>
+                <a href="#" onclick="logout()">Logout</a>
+            `;
+
+            // Auto-fill
+            document.getElementById('patientName').value = patient.name;
+            document.getElementById('patientEmail').value = patient.email;
+            document.getElementById('patientPhone').value = patient.phone;
+            document.getElementById('patientId').value = patient.id;
+
+            // Optional: Read-only if needed
+            // document.getElementById('patientName').readOnly = true;
+            // document.getElementById('patientEmail').readOnly = true;
+        } else {
+            navLinks.innerHTML += `
+                <a href="patient-login.html">Login / Register</a>
+            `;
+        }
+
+        function logout() {
+            localStorage.removeItem('patient');
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>

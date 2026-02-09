@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Hospital Appointment System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HealthCare+</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="patient-login.html">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="booking-container">
+            <h1>Create Account</h1>
+
+            <div id="message-container"></div>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" required placeholder="123-456-7890">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8081/api';
+
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/patients/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, phone, password })
+                });
+
+                if (response.ok) {
+                    alert('Registration Successful! Please login.');
+                    window.location.href = 'patient-login.html';
+                } else {
+                    const error = await response.json();
+                    document.getElementById('message-container').innerHTML = `<div class="error-msg">Registration failed: ${error.message || 'Error'}</div>`;
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById('message-container').innerHTML = '<div class="error-msg">Network error</div>';
+            }
+        });
+    </script>
+</body>
+
+</html>

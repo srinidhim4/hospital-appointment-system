@@ -1,0 +1,15 @@
+com\example\hospital\exception\BookingConflictException.class
+com\example\hospital\service\DoctorService.class
+com\example\hospital\entity\Appointment$AppointmentStatus.class
+com\example\hospital\entity\Patient.class
+com\example\hospital\controller\AppointmentController.class
+com\example\hospital\exception\ResourceNotFoundException.class
+com\example\hospital\HospitalApplication.class
+com\example\hospital\entity\Appointment.class
+com\example\hospital\entity\Doctor.class
+com\example\hospital\repository\AppointmentRepository.class
+com\example\hospital\service\AppointmentService.class
+com\example\hospital\controller\DoctorController.class
+com\example\hospital\repository\DoctorRepository.class
+com\example\hospital\exception\GlobalExceptionHandler.class
+com\example\hospital\repository\PatientRepository.class

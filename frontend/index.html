@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find a Doctor - Hospital Appointment System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HealthCare+</a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html">Doctors</a>
+                <!-- Links injected by JS -->
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Our Doctors</h1>
+        <div id="doctor-list" class="doctor-grid">
+            <p>Loading doctors...</p>
+        </div>
+    </main>
+
+    <footer
+        style="text-align: center; margin-top: 3rem; padding: 1rem; color: var(--secondary-color); font-size: 0.8rem;">
+        <p>&copy; 2026 HealthCare+. <a href="admin-login.html" style="color: var(--secondary-color);">Admin</a></p>
+    </footer>
+
+    <script src="js/doctors.js"></script>
+    <script>
+        const navLinks = document.getElementById('nav-links');
+        const patient = localStorage.getItem('patient');
+
+        if (patient) {
+            navLinks.innerHTML += `
+                <a href="appointments.html">My Appointments</a>
+                <a href="#" onclick="logout()">Logout</a>
+            `;
+        } else {
+            navLinks.innerHTML += `
+                <a href="patient-login.html">Login / Register</a>
+            `;
+        }
+
+        function logout() {
+            localStorage.removeItem('patient');
+            window.location.reload();
+        }
+    </script>
+</body>
+
+</html>

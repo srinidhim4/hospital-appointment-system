@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments - Hospital Appointment System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HealthCare+</a>
+            <div class="nav-links">
+                <a href="index.html">Doctors</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="booking-container">
+            <h1>My Appointments</h1>
+            <p id="welcome-msg" style="margin-bottom: 1rem; color: var(--secondary-color);"></p>
+
+            <div id="appointments-list">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/appointments.js"></script>
+    <script>
+        // Check Auth
+        const patientData = localStorage.getItem('patient');
+        if (!patientData) {
+            window.location.href = 'patient-login.html';
+        } else {
+            const patient = JSON.parse(patientData);
+            document.getElementById('welcome-msg').textContent = `Welcome, ${patient.name}`;
+
+            // Trigger fetch
+            // We need to slightly modify appointments.js or just write inline fetch here for simplicity given the change
+            // But since appointments.js exists, let's look at how to reuse it or override it.
+            // Actually, appointments.js expects a manual click. Let's override it or update appointments.js
+
+            // Simulating the fetch call or just calling the API directly here
+            fetchAppointmentsForPatient(patient.id);
+        }
+
+        async function fetchAppointmentsForPatient(id) {
+            const API_BASE_URL = 'http://localhost:8081/api';
+            const listContainer = document.getElementById('appointments-list');
+            try {
+                const response = await fetch(`${API_BASE_URL}/appointments/patient/${id}`);
+                const appointments = await response.json();
+
+                if (appointments.length === 0) {
+                    listContainer.innerHTML = '<p>No appointments found.</p>';
+                    return;
+                }
+
+                listContainer.innerHTML = appointments.map(appt => `
+                    <div class="doctor-card" style="margin-bottom: 1rem;">
+                        <h3>${appt.doctor.name} - ${appt.doctor.specialization}</h3>
+                        <p><strong>Date:</strong> ${appt.appointmentDate}</p>
+                        <p><strong>Time:</strong> ${appt.startTime} - ${appt.endTime}</p>
+                        <p><strong>Status:</strong> <span style="color: ${appt.status === 'BOOKED' ? 'green' : 'red'}">${appt.status}</span></p>
+                    </div>
+                `).join('');
+            } catch (e) {
+                listContainer.innerHTML = '<div class="error-msg">Failed to load appointments.</div>';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('patient');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

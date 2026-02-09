@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Hospital Appointment System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Simple auth check
+        if (localStorage.getItem('isAdmin') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HealthCare+ (Admin)</a>
+            <div class="nav-links">
+                <a href="admin.html" style="color: var(--primary-color);">Dashboard</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Admin Dashboard</h1>
+
+        <!-- Doctors Management Section -->
+        <section style="margin-bottom: 3rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>Doctors Management</h2>
+                <a href="add-doctor.html" class="btn">Add New Doctor</a>
+            </div>
+            <div class="booking-container" style="max-width: 100%;">
+                <table id="doctors-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8f9fa; text-align: left;">
+                            <th style="padding: 1rem;">ID</th>
+                            <th style="padding: 1rem;">Name</th>
+                            <th style="padding: 1rem;">Specialization</th>
+                            <th style="padding: 1rem;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctors-list">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Appointments Management Section -->
+        <section>
+            <h2>All Appointments</h2>
+            <div class="booking-container" style="max-width: 100%;">
+                <table id="appointments-table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #f8f9fa; text-align: left;">
+                            <th style="padding: 1rem;">ID</th>
+                            <th style="padding: 1rem;">Doctor</th>
+                            <th style="padding: 1rem;">Patient</th>
+                            <th style="padding: 1rem;">Date/Time</th>
+                            <th style="padding: 1rem;">Status</th>
+                            <th style="padding: 1rem;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-list">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/admin.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('isAdmin');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

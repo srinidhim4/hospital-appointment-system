@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Hospital Appointment System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">HealthCare+</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="booking-container">
+            <h1>Admin Login</h1>
+            <p style="margin-bottom: 1.5rem; color: var(--secondary-color);">Restricted Area. Authorized Access Only.
+            </p>
+
+            <div id="message-container"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Enter Admin Password">
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+            const msg = document.getElementById('message-container');
+
+            if (password === 'admin123') {
+                // Simple redirection (not secure, but sufficient for requirements)
+                localStorage.setItem('isAdmin', 'true');
+                window.location.href = 'admin.html';
+            } else {
+                msg.innerHTML = '<div class="error-msg">Invalid Password</div>';
+            }
+        });
+    </script>
+</body>
+
+</html>
